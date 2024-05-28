@@ -2,7 +2,6 @@ package com.example.OlympiqueAPI.Model;
 
 import jakarta.persistence.*;
 import java.util.Date;
-import java.util.Set;
 
 @Entity
 @Table(name = "events")
@@ -14,17 +13,43 @@ public class Event {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
-    private String description;
-
     @Temporal(TemporalType.TIMESTAMP)
+    private Date date;
+
     @Column(nullable = false)
-    private Date eventDate;
+    private boolean isClosed;
 
-    @ManyToOne
-    @JoinColumn(name = "stadium_id")
-    private Stadium stadium;
+    // Getters and Setters
 
-    @OneToMany(mappedBy = "event")
-    private Set<Ticket> tickets;
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public boolean isClosed() {
+        return isClosed;
+    }
+
+    public void setClosed(boolean closed) {
+        isClosed = closed;
+    }
 }

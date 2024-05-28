@@ -34,4 +34,9 @@ public class UserController {
                           .map(u -> ResponseEntity.ok(u))
                           .orElse(ResponseEntity.status(401).build());
     }
+
+    // @GetMapping("/{userId}/tickets")
+    // public ResponseEntity<?> getUserTickets(@PathVariable Long userId) {
+    //     return ResponseEntity.ok(userService.findTicketsByUserId(userId));
+    // }
 }
