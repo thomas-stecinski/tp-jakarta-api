@@ -30,8 +30,25 @@ public class EventService {
         return eventRepository.save(event);
     }
 
+    public Event update(Long id, Event eventDetails) {
+        return eventRepository.findById(id).map(event -> {
+            event.setName(eventDetails.getName());
+            event.setDate(eventDetails.getDate());
+            event.setStadium(eventDetails.getStadium());
+            event.setTickets(eventDetails.getTickets());
+            event.setClosed(eventDetails.isClosed());
+            return eventRepository.save(event);
+        }).orElseThrow(() -> new IllegalArgumentException("Event not found"));
+    }
+
     public void delete(Long id) {
         eventRepository.deleteById(id);
     }
-}
 
+    public Event closeRegistration(Long id) {
+        return eventRepository.findById(id).map(event -> {
+            event.setClosed(true);
+            return eventRepository.save(event);
+        }).orElseThrow(() -> new IllegalArgumentException("Event not found"));
+    }
+}
