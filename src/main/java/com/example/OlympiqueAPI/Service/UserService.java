@@ -3,6 +3,7 @@ package com.example.OlympiqueAPI.Service;
 import com.example.OlympiqueAPI.Model.User;
 import com.example.OlympiqueAPI.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,10 +13,20 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    public Optional<User> login(String email, String password) {
+        Optional<User> foundUser = userRepository.findByEmail(email);
+        if (foundUser.isPresent() && passwordEncoder.matches(password, foundUser.get().getPassword())) {
+            return foundUser;
+        }
+        return Optional.empty(); 
     }
 
     public List<User> findAll() {
