@@ -2,6 +2,7 @@ package com.example.OlympiqueAPI.Model;
 
 import jakarta.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "events")
@@ -13,14 +14,21 @@ public class Event {
     @Column(nullable = false)
     private String name;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
+    @Column(nullable = false)
     private Date date;
+
+    @ManyToOne
+    @JoinColumn(name = "stadium_id")
+    private Stadium stadium;
+
+    @OneToMany(mappedBy = "event")
+    private Set<Ticket> tickets;
 
     @Column(nullable = false)
     private boolean isClosed;
 
     // Getters and Setters
-
     public Long getId() {
         return id;
     }
@@ -43,6 +51,22 @@ public class Event {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public Stadium getStadium() {
+        return stadium;
+    }
+
+    public void setStadium(Stadium stadium) {
+        this.stadium = stadium;
+    }
+
+    public Set<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(Set<Ticket> tickets) {
+        this.tickets = tickets;
     }
 
     public boolean isClosed() {

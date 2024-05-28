@@ -31,7 +31,7 @@ public class TicketService {
         List<Ticket> existingTickets = ticketRepository.findByUserId(ticket.getUser().getId());
         for (Ticket existingTicket : existingTickets) {
             if (existingTicket.getEvent().getDate().equals(ticket.getEvent().getDate())) {
-                throw new IllegalStateException("L'user à déja un ticket pour cette date");
+                throw new IllegalStateException("L'user à déjà un ticket pour cette date");
             }
         }
 

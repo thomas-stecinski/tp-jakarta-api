@@ -22,6 +22,7 @@ public class Stadium {
     @OneToMany(mappedBy = "stadium")
     private Set<Event> events;
 
+    // Getters and Setters
     public Long getId() {
         return id;
     }
